@@ -1,0 +1,62 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="JupyterPackageInspection" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="PyInterpreterInspection" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="12">
+            <item index="0" class="java.lang.String" itemvalue="fastapi" />
+            <item index="1" class="java.lang.String" itemvalue="pydantic" />
+            <item index="2" class="java.lang.String" itemvalue="uvicorn" />
+            <item index="3" class="java.lang.String" itemvalue="passlib" />
+            <item index="4" class="java.lang.String" itemvalue="Crypto" />
+            <item index="5" class="java.lang.String" itemvalue="nvidia-ml-py" />
+            <item index="6" class="java.lang.String" itemvalue="soundfile" />
+            <item index="7" class="java.lang.String" itemvalue="mpmath" />
+            <item index="8" class="java.lang.String" itemvalue="torchaudio" />
+            <item index="9" class="java.lang.String" itemvalue="aiohttp" />
+            <item index="10" class="java.lang.String" itemvalue="asttokens" />
+            <item index="11" class="java.lang.String" itemvalue="pyroomacoustics" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E402" />
+          <option value="E302" />
+          <option value="E305" />
+          <option value="E501" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="mido.*" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="VulnerableLibrariesLocal" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="isIgnoringEnabled" value="true" />
+      <option name="ignoredModules">
+        <list>
+          <option value="meowify" />
+        </list>
+      </option>
+      <option name="ignoredPackages">
+        <list>
+          <option value="null:torch:2.4.1" />
+        </list>
+      </option>
+      <option name="ignoredReasons">
+        <list>
+          <option value="Not exploitable" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
