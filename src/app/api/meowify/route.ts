@@ -8,13 +8,16 @@ export async function POST(request: NextRequest) {
   try {
     // Get the form data from the request
     const formData = await request.formData();
-    
+
+    // Get the Python API URL from environment variable or use default
+    const pythonApiUrl = process.env.PYTHON_API_URL || 'http://localhost:8000/meowify/';
+
     // Forward the request to the Python API
-    const response = await fetch('http://localhost:8000/meowify/', {
+    const response = await fetch(pythonApiUrl, {
       method: 'POST',
       body: formData,
     });
-    
+
     if (!response.ok) {
       // If the Python API returns an error, return it to the client
       const errorText = await response.text();
@@ -23,10 +26,10 @@ export async function POST(request: NextRequest) {
         { status: response.status }
       );
     }
-    
+
     // Get the processed audio as a blob
     const audioBlob = await response.blob();
-    
+
     // Return the processed audio to the client
     return new NextResponse(audioBlob, {
       headers: {

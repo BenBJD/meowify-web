@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  # Frontend Next.js application
+  frontend:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PYTHON_API_URL=http://api:8000/meowify/
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  # Python API service
+  # Note: You'll need to replace this with your actual Python API image
+  api:
+    # Replace with your Python API image
+    image: your-python-api-image
+    # If you have a Dockerfile for your Python API in a subdirectory, uncomment the following:
+    # build: ./python-api
+    ports:
+      - "8000:8000"
+    # Add any environment variables your Python API needs
+    environment:
+      - PORT=8000
+    # Add any volumes your Python API needs
+    # volumes:
+    #   - ./data:/app/data
+    restart: unless-stopped
