@@ -9,8 +9,9 @@ export async function GET() {
       headers: {
         'Accept': 'application/json',
       },
-      // Add a timeout of 5 seconds
-      signal: AbortSignal.timeout(5000),
+      // Add a timeout of 30 seconds
+      // This is long because the Python API can freeze a bit
+      signal: AbortSignal.timeout(60000),
     });
 
     if (!response.ok) {
