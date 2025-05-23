@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   frontend:
-    image: ghcr.io/benbjd/meowify-web:latest
+    image: ghcr.io/benbjd/meowify-web:main
     ports:
       - "3000:3000"
     environment:
@@ -13,7 +11,7 @@ services:
       - meowify-network
 
   api:
-    image: ghcr.io/benbjd/meowify-api:latest
+    image: ghcr.io/benbjd/meowify-api:main
     volumes:
       - ./checkpoint:/checkpoint
     networks:
