@@ -4,7 +4,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - PYTHON_API_URL=http://localhost:8000
+      - PYTHON_API_URL=http://api:8000
     depends_on:
       - api
     networks:
@@ -12,6 +12,8 @@ services:
 
   api:
     image: ghcr.io/benbjd/meowify-api:main
+    ports:
+      - "8000:8000"
     volumes:
       - ./checkpoint:/checkpoint
     networks:
