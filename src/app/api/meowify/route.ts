@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
 
     // Get the Python API URL from environment variable or use default
-    const pythonApiUrl = process.env.PYTHON_API_URL || 'http://localhost:8000/meowify/';
+    const pythonApiUrl = process.env.PYTHON_API_URL + "/meowify/" || 'http://localhost:8000/meowify/';
 
     // Forward the request to the Python API
     const response = await fetch(pythonApiUrl, {
