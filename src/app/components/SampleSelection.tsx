@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { FiUploadCloud, FiMusic, FiCheck } from "react-icons/fi";
 import { AudioPlayer } from "./AudioPlayer";
 import { getPitchName, extractPitchFromFilename, getAllMidiPitches } from "../utils/midiUtils";
@@ -8,7 +8,7 @@ import { useToast } from "./ToastProvider";
 
 interface SampleSelectionProps {
   samples: Record<number, File | null>;
-  setSamples: (samples: Record<number, File | null>) => void;
+  setSamples: (samples: Record<number, File | null> | ((prev: Record<number, File | null>) => Record<number, File | null>)) => void;
   sampleUrls: Record<number, string>;
 }
 
@@ -25,10 +25,11 @@ export function SampleSelection({
     pitch: number,
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSamples((prev) => ({
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setSamples((prev: Record<number, File | null>) => ({
         ...prev,
-        [pitch]: e.target.files![0],
+        [pitch]: files[0],
       }));
     }
   };
@@ -66,8 +67,7 @@ export function SampleSelection({
     // Show feedback to the user
     if (successfulUploads.length > 0) {
       const message =
-        `Successfully assigned ${successfulUploads.length} sample${
-          successfulUploads.length > 1 ? "s" : ""
+        `Successfully assigned ${successfulUploads.length} sample${successfulUploads.length > 1 ? "s" : ""
         }:\n` +
         successfulUploads
           .map(
@@ -77,8 +77,7 @@ export function SampleSelection({
 
       if (failedUploads.length > 0) {
         const failMessage =
-          `Failed to assign ${failedUploads.length} sample${
-            failedUploads.length > 1 ? "s" : ""
+          `Failed to assign ${failedUploads.length} sample${failedUploads.length > 1 ? "s" : ""
           }:\n` +
           failedUploads.map((f) => `- ${f.name}: ${f.reason}`).join("\n");
 
@@ -91,8 +90,7 @@ export function SampleSelection({
       }
     } else if (failedUploads.length > 0) {
       showToast(
-        `Failed to assign ${failedUploads.length} sample${
-          failedUploads.length > 1 ? "s" : ""
+        `Failed to assign ${failedUploads.length} sample${failedUploads.length > 1 ? "s" : ""
         }. Make sure your filenames contain a valid note name (e.g., a4.wav, C#3.mp3).`,
         "error"
       );
@@ -102,12 +100,12 @@ export function SampleSelection({
   // Filter pitches based on search term
   const filteredPitches = searchTerm
     ? midiPitches.filter((pitch) => {
-        const pitchName = getPitchName(pitch);
-        return (
-          pitchName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          pitch.toString().includes(searchTerm)
-        );
-      })
+      const pitchName = getPitchName(pitch);
+      return (
+        pitchName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        pitch.toString().includes(searchTerm)
+      );
+    })
     : midiPitches;
 
   return (
@@ -174,23 +172,21 @@ export function SampleSelection({
               )}
 
               <div
-                className={`border rounded-lg transition-all duration-200 card-hover ${
-                  hasFile
-                    ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20"
-                    : isBlackKey
+                className={`border rounded-lg transition-all duration-200 card-hover ${hasFile
+                  ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20"
+                  : isBlackKey
                     ? "border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800"
                     : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700"
-                }`}
+                  }`}
               >
                 <div className="p-3">
                   <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center">
                       <div
-                        className={`w-8 h-8 rounded-md flex items-center justify-center mr-2 text-white font-medium ${
-                          isBlackKey
-                            ? "bg-gray-800 dark:bg-gray-900"
-                            : "bg-gradient-primary"
-                        }`}
+                        className={`w-8 h-8 rounded-md flex items-center justify-center mr-2 text-white font-medium ${isBlackKey
+                          ? "bg-gray-800 dark:bg-gray-900"
+                          : "bg-gradient-primary"
+                          }`}
                       >
                         {pitchName.replace(/[0-9]/g, "")}
                       </div>
@@ -211,10 +207,9 @@ export function SampleSelection({
                     className={`
                       flex items-center justify-center border border-dashed rounded p-2 cursor-pointer
                       transition-colors duration-200
-                      ${
-                        hasFile
-                          ? "border-green-300 dark:border-green-700 hover:bg-green-100 dark:hover:bg-green-900/30"
-                          : "border-gray-300 dark:border-gray-600 hover:border-purple-300 dark:hover:border-purple-500 hover:bg-gray-50 dark:hover:bg-gray-600/50"
+                      ${hasFile
+                        ? "border-green-300 dark:border-green-700 hover:bg-green-100 dark:hover:bg-green-900/30"
+                        : "border-gray-300 dark:border-gray-600 hover:border-purple-300 dark:hover:border-purple-500 hover:bg-gray-50 dark:hover:bg-gray-600/50"
                       }
                     `}
                   >

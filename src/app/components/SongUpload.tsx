@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef } from "react";
 import { FiUploadCloud, FiCheck, FiInfo } from "react-icons/fi";
 import { AudioPlayer } from "./AudioPlayer";
 
@@ -66,11 +66,10 @@ export function SongUpload({ selectedSong, setSelectedSong, songUrl }: SongUploa
       </h2>
 
       <div
-        className={`mb-6 border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
-          isDragging
-            ? "border-purple-500 dark:border-purple-400 bg-purple-50 dark:bg-purple-900/20"
-            : "border-gray-300 dark:border-gray-600 hover:border-purple-300 dark:hover:border-purple-500"
-        }`}
+        className={`mb-6 border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${isDragging
+          ? "border-purple-500 dark:border-purple-400 bg-purple-50 dark:bg-purple-900/20"
+          : "border-gray-300 dark:border-gray-600 hover:border-purple-300 dark:hover:border-purple-500"
+          }`}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
@@ -87,11 +86,10 @@ export function SongUpload({ selectedSong, setSelectedSong, songUrl }: SongUploa
 
         <div className="flex flex-col items-center justify-center py-4">
           <FiUploadCloud
-            className={`w-16 h-16 mb-4 transition-colors duration-300 ${
-              isDragging
-                ? "text-purple-500 dark:text-purple-400"
-                : "text-gray-400 dark:text-gray-500"
-            }`}
+            className={`w-16 h-16 mb-4 transition-colors duration-300 ${isDragging
+              ? "text-purple-500 dark:text-purple-400"
+              : "text-gray-400 dark:text-gray-500"
+              }`}
           />
 
           <p className="text-lg font-medium mb-2 dark:text-white">
@@ -139,7 +137,7 @@ export function SongUpload({ selectedSong, setSelectedSong, songUrl }: SongUploa
         <FiInfo className="text-blue-500 dark:text-blue-400 w-5 h-5 mt-0.5 mr-3 flex-shrink-0" />
         <div className="text-sm text-blue-700 dark:text-blue-300">
           <p>Your song will be processed to separate vocals, which will then be transcribed to MIDI.</p>
-          <p className="mt-1">Next, you'll be able to replace the original vocals with your custom samples.</p>
+          <p className="mt-1">Next, you&apos;ll be able to replace the original vocals with your custom samples.</p>
         </div>
       </div>
     </div>

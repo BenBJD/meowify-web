@@ -1,37 +1,32 @@
-# Use Node.js as the base image
-FROM node:20-alpine AS base
-
-# Set working directory
+# Build stage
+FROM node:20-alpine AS deps
 WORKDIR /app
-
-# Install dependencies
-FROM base AS deps
-COPY package.json package-lock.json* ./
+COPY package*.json ./
 RUN npm ci
 
-# Build the application
+# Builder stage
 FROM deps AS builder
 COPY . .
 RUN npm run build
 
-# Production image
-FROM base AS runner
+# Production stage
+FROM node:20-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
-# Create a non-root user
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
+# Copy necessary files
+COPY --from=builder /app/next.config.ts ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
-# Copy necessary files from builder
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Set environment variables
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 
-# Expose the port the app will run on
+# Expose the port
 EXPOSE 3000
 
-# Set the command to run the app
+# Start the application
 CMD ["node", "server.js"]

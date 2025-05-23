@@ -17,13 +17,24 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Initialize theme from localStorage or system preference
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme') as Theme | null;
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const systemPrefersDark = mediaQuery.matches;
+
     if (storedTheme) {
       setTheme(storedTheme);
     } else if (systemPrefersDark) {
       setTheme('dark');
     }
+
+    // Listen for system theme changes
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   // Update HTML class when theme changes

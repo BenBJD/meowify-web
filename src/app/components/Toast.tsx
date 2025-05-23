@@ -8,7 +8,7 @@ interface ToastComponentProps extends ToastProps {
   onClose: () => void;
 }
 
-export function Toast({ id, message, type, onClose }: ToastComponentProps) {
+export function Toast({ message, type, onClose }: ToastComponentProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -17,13 +17,16 @@ export function Toast({ id, message, type, onClose }: ToastComponentProps) {
       setIsVisible(true);
     }, 10);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   const handleClose = () => {
     setIsVisible(false);
     // Wait for exit animation to complete
-    setTimeout(onClose, 300);
+    const timer = setTimeout(onClose, 300);
+    return () => clearTimeout(timer);
   };
 
   const getToastIcon = () => {
@@ -42,12 +45,12 @@ export function Toast({ id, message, type, onClose }: ToastComponentProps) {
 
   const getToastStyles = () => {
     const baseStyles = "rounded-lg shadow-lg p-4 flex items-start gap-3 max-w-md transform transition-all duration-300";
-    const visibilityStyles = isVisible 
-      ? "translate-x-0 opacity-100" 
+    const visibilityStyles = isVisible
+      ? "translate-x-0 opacity-100"
       : "translate-x-full opacity-0";
-    
+
     let typeStyles = "";
-    
+
     switch (type) {
       case 'success':
         typeStyles = "bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-300";
@@ -63,7 +66,7 @@ export function Toast({ id, message, type, onClose }: ToastComponentProps) {
         typeStyles = "bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300";
         break;
     }
-    
+
     return `${baseStyles} ${typeStyles} ${visibilityStyles}`;
   };
 
@@ -89,7 +92,7 @@ export function Toast({ id, message, type, onClose }: ToastComponentProps) {
       <div className="flex-1 pt-0.5">
         <p className="text-sm">{message}</p>
       </div>
-      <button 
+      <button
         onClick={handleClose}
         className="flex-shrink-0 ml-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
         aria-label="Close"

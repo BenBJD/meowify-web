@@ -4,6 +4,7 @@ import React from "react";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { ToastProvider } from "./components/ToastProvider";
+import { ApiStatusIndicator } from "./components/ApiStatusIndicator";
 
 function Header() {
   return (
@@ -18,6 +19,7 @@ function Header() {
           </span>
         </div>
         <div className="flex items-center space-x-4">
+          <ApiStatusIndicator />
           <a href="#" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
             Help
           </a>

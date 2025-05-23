@@ -40,7 +40,7 @@ export default function Home() {
         URL.revokeObjectURL(songUrl);
       }
     };
-  }, [selectedSong]);
+  }, [selectedSong, songUrl]);
 
   // Create audio URLs for samples
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function Home() {
         URL.revokeObjectURL(url);
       });
     };
-  }, [samples]);
+  }, [samples, sampleUrls]);
 
   // Clean up meowified audio URL when the component unmounts
   useEffect(() => {
@@ -154,10 +154,10 @@ export default function Home() {
         {/* Main Content */}
         <div className="flex-1 animate-slide-up">
           {/* Song Upload Component */}
-          <SongUpload 
-            selectedSong={selectedSong} 
-            setSelectedSong={setSelectedSong} 
-            songUrl={songUrl} 
+          <SongUpload
+            selectedSong={selectedSong}
+            setSelectedSong={setSelectedSong}
+            songUrl={songUrl}
           />
 
           {/* Process Button Component */}
@@ -166,7 +166,6 @@ export default function Home() {
               selectedSong={selectedSong}
               selectedSamplesCount={selectedSamplesCount}
               meowifiedAudioUrl={meowifiedAudioUrl}
-              setMeowifiedAudioUrl={setMeowifiedAudioUrl}
               onProcess={handleProcess}
             />
           </div>

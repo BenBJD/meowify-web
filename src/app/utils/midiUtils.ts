@@ -30,7 +30,7 @@ export function getMidiPitch(noteName: string): number | null {
 
   // Convert note to index in the noteNames array
   const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-  let noteIndex = noteNames.findIndex(n => n.toUpperCase() === (note.toUpperCase() + accidental));
+  const noteIndex = noteNames.findIndex(n => n.toUpperCase() === (note.toUpperCase() + accidental));
 
   if (noteIndex === -1) return null;
 

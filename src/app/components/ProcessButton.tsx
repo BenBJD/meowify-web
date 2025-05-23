@@ -9,13 +9,11 @@ import {
   FiDownload,
 } from "react-icons/fi";
 import { AudioPlayer } from "./AudioPlayer";
-import { useToast } from "./ToastProvider";
 
 interface ProcessButtonProps {
   selectedSong: File | null;
   selectedSamplesCount: number;
   meowifiedAudioUrl: string | null;
-  setMeowifiedAudioUrl: (url: string | null) => void;
   onProcess: () => Promise<void>;
 }
 
@@ -23,11 +21,9 @@ export function ProcessButton({
   selectedSong,
   selectedSamplesCount,
   meowifiedAudioUrl,
-  setMeowifiedAudioUrl,
   onProcess,
 }: ProcessButtonProps) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const { showToast } = useToast();
 
   const handleProcess = async () => {
     if (!selectedSong || selectedSamplesCount === 0 || isProcessing) return;
@@ -77,10 +73,9 @@ export function ProcessButton({
             px-6 py-3 rounded-lg font-medium text-white 
             transition-all duration-300 transform
             flex items-center space-x-2
-            ${
-              !selectedSong || selectedSamplesCount === 0
-                ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed opacity-70"
-                : isProcessing
+            ${!selectedSong || selectedSamplesCount === 0
+              ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed opacity-70"
+              : isProcessing
                 ? "bg-purple-600 dark:bg-purple-700"
                 : "bg-gradient-primary hover:shadow-lg hover:-translate-y-1 active:translate-y-0 active:shadow-md"
             }
@@ -145,18 +140,16 @@ export function ProcessButton({
       {/* Status indicators */}
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div
-          className={`flex items-center p-3 rounded-lg transition-colors duration-300 ${
-            selectedSong
+          className={`flex items-center p-3 rounded-lg transition-colors duration-300 ${selectedSong
               ? "bg-green-50 dark:bg-green-900/20"
               : "bg-gray-100 dark:bg-gray-800"
-          }`}
+            }`}
         >
           <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-              selectedSong
+            className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${selectedSong
                 ? "bg-green-500 dark:bg-green-600"
                 : "bg-gray-300 dark:bg-gray-600"
-            }`}
+              }`}
           >
             <FiCheck className="w-4 h-4 text-white" />
           </div>
@@ -171,18 +164,16 @@ export function ProcessButton({
         </div>
 
         <div
-          className={`flex items-center p-3 rounded-lg transition-colors duration-300 ${
-            selectedSamplesCount > 0
+          className={`flex items-center p-3 rounded-lg transition-colors duration-300 ${selectedSamplesCount > 0
               ? "bg-green-50 dark:bg-green-900/20"
               : "bg-gray-100 dark:bg-gray-800"
-          }`}
+            }`}
         >
           <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-              selectedSamplesCount > 0
+            className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${selectedSamplesCount > 0
                 ? "bg-green-500 dark:bg-green-600"
                 : "bg-gray-300 dark:bg-gray-600"
-            }`}
+              }`}
           >
             <FiCheck className="w-4 h-4 text-white" />
           </div>
@@ -199,22 +190,20 @@ export function ProcessButton({
         </div>
 
         <div
-          className={`flex items-center p-3 rounded-lg transition-colors duration-300 ${
-            isProcessing
+          className={`flex items-center p-3 rounded-lg transition-colors duration-300 ${isProcessing
               ? "bg-purple-50 dark:bg-purple-900/20 animate-pulse-subtle"
               : meowifiedAudioUrl
-              ? "bg-green-50 dark:bg-green-900/20"
-              : "bg-gray-100 dark:bg-gray-800"
-          }`}
+                ? "bg-green-50 dark:bg-green-900/20"
+                : "bg-gray-100 dark:bg-gray-800"
+            }`}
         >
           <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-              isProcessing
+            className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${isProcessing
                 ? "bg-purple-500 dark:bg-purple-600"
                 : meowifiedAudioUrl
-                ? "bg-green-500 dark:bg-green-600"
-                : "bg-gray-300 dark:bg-gray-600"
-            }`}
+                  ? "bg-green-500 dark:bg-green-600"
+                  : "bg-gray-300 dark:bg-gray-600"
+              }`}
           >
             {isProcessing ? (
               <FiLoader className="w-4 h-4 text-white animate-spin" />
@@ -230,8 +219,8 @@ export function ProcessButton({
               {isProcessing
                 ? "In progress..."
                 : meowifiedAudioUrl
-                ? "Complete"
-                : "Ready to start"}
+                  ? "Complete"
+                  : "Ready to start"}
             </p>
           </div>
         </div>
